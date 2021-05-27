@@ -33,7 +33,7 @@ router.get('/', function(req, res){
 
 // Eric: call your own list of recipes and saved to your userid
 
-router.get('/my-recipes', validateSession, (req, res) => {
+router.get('/my-recipes', (req, res) => {
     let userid = req.user.id
     Recipe.findAll({
         where: {owner: userid}
@@ -53,7 +53,7 @@ router.get('/:name', function(req,res) {
 })
 // Brey's PUT ***********
 
-router.put("/update/:entryId", validateSession, function (req, res) {
+router.put("/update/:entryId", function (req, res) {
     const updateRecipePost = {
         name: req.body.recipe.name,
         ingredients: req.body.recipe.ingredients,
@@ -71,7 +71,7 @@ router.put("/update/:entryId", validateSession, function (req, res) {
 
 // Brey's DELETE ***********
 
-router.delete("/delete/:id", validateSession, function (req, res) {
+router.delete("/delete/:id", function (req, res) {
     const query = {where: { id: req.params.id, owner: req.user.id } };
 
     recipe.destroy(query)
