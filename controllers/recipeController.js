@@ -1,7 +1,28 @@
+
+
 const express = require('express');
 const router = express.Router();
 const validateSession = require('../middleware/validateSession');
 const recipe = require('../models/recipe');
+
+//Rachel's Create//
+/* *********
+*** Recipe Creation ***
+********/
+
+router.post('/create', validateSession, (req,res) => {
+    const recipeEntry = {
+        name: req.body.recipe.title,
+        ingredients: req.body.recipe.ingredients,
+        preparation: req.body.recipe.preparation,
+        owner: req.body.recipe.owner,
+        time: req.body.recipe.time
+    }
+    Recipe.create(recipeEntry)
+    .then(recipe => res.status(200).json(recipe))
+    .catch (err=> res.status(500).json({error:err}))
+})
+
 
 
 router.get('/', function(req, res){
@@ -59,3 +80,15 @@ router.delete("/delete/:id", validateSession, function (req, res) {
 });
 
 module.exports = router;
+
+
+
+
+
+// router.get('/', validateSession, function(req, res)
+// {
+
+// res.send('Pracitce Round');
+
+// }); 
+
