@@ -22,7 +22,7 @@ const database = require('../db')
             allowNull: false
         },
         owner: {
-            type: sequelize.INTEGER
+            type: sequelize.STRING,
         },
         time: {
             type: sequelize.STRING,
