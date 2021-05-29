@@ -5,32 +5,36 @@ const router = express.Router();
 const validateSession = require('../middleware/validateSession');
 const recipe = require('../models/recipe');
 
-//Rachel's Create Recipe Creation *** //
+//Rachel's Create//
+/* *********
+*** Recipe Creation ***
+********/
 
 router.post('/create', validateSession, (req,res) => {
-    recipe.create({
-        name: req.body.recipe.name,
+    const recipeEntry = {
+        name: req.body.recipe.title,
         ingredients: req.body.recipe.ingredients,
         preparation: req.body.recipe.preparation,
         owner: req.body.recipe.owner,
         time: req.body.recipe.time
-    }) 
+    }
+    Recipe.create(recipeEntry)
     .then(recipe => res.status(200).json(recipe))
     .catch (err=> res.status(500).json({error:err}))
 })
 
 
 
-// router.get('/', function(req, res){
-//     Recipe.findAll()
-//     .then(recipes => res.status(200). json(recipes))
-//     .catch(err => res.status(500).json({error: err}))
-// });
+router.get('/', function(req, res){
+    Recipe.findAll()
+    .then(recipes => res.status(200). json(recipes))
+    .catch(err => res.status(500).json({error: err}))
+});
 
 // Eric: call your own list of recipes and saved to your userid
 
-router.get('/my-recipes', validateSession, (req, res) => {
-    let userid = req.body.owner.id
+router.get('/my-recipes', (req, res) => {
+    let userid = req.user.id
     Recipe.findAll({
         where: {owner: userid}
     })
@@ -49,7 +53,7 @@ router.get('/:name', function(req,res) {
 })
 // Brey's PUT ***********
 
-router.put("/update/:id", validateSession, function (req, res) {
+router.put("/update/:entryId", function (req, res) {
     const updateRecipePost = {
         name: req.body.recipe.name,
         ingredients: req.body.recipe.ingredients,
@@ -58,7 +62,7 @@ router.put("/update/:id", validateSession, function (req, res) {
         owner: req.body.recipe.owner
     };
 
-    const query = { where: { id: req.params.id, owner: req.user.id } };
+    const query = { where: { id: req.params.entryId, owner: req.user.id } };
 
     Recipe.update(updateRecipePost, query)
         .then((recipes) => res.status(200).json(recipes))
@@ -67,7 +71,7 @@ router.put("/update/:id", validateSession, function (req, res) {
 
 // Brey's DELETE ***********
 
-router.delete("/delete/:id", validateSession, function (req, res) {
+router.delete("/delete/:id", function (req, res) {
     const query = {where: { id: req.params.id, owner: req.user.id } };
 
     recipe.destroy(query)

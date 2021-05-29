@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const Express = require('express');
 const app = Express();
 const database = require('./db');
@@ -8,13 +6,10 @@ const recipeController = require('./controllers/recipeController')
 
 database.sync();
 
-app.use(require('./middleware/headers'));
-
-
 app.use(Express.json())
 app.use("/", userController)
 app.use('/recipe', recipeController)
 
 
 
-app.listen(process.env.PORT, () => console.log(`[${process.env.PORT}]: THE APP IS RUNNING`))
+app.listen(3000, () => console.log('[Port 3000]:THE APP IS RUNNING'))

@@ -4,7 +4,6 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 
-/* Test route */
 router.get('/user', (req, res) => {
     res.send('testing the userController')
 
@@ -16,7 +15,7 @@ router.post('/register', (req, res) => {              //with every endpoint we n
         password: bcrypt.hashSync(req.body.password, 10)
     })
     .then(user => {
-        let token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: '1d'})
+        let token = jwt.sign({ id: user.id }, "I_AM_SECRET", { expiresIn: '1d '})
         res.send({ user, token })
     })
          
@@ -40,7 +39,7 @@ router.post('/login', (req, res) => {
             })
 
             function generateToken(user){
-                let token = jwt.sign( { id: user.id }, process.env.SECRET, { expiresIn: '1d'} );
+                let token = jwt.sign( { id: user.id }, 'I_AM_SECRET', { expiresIn: '1d'} );
                 res.send( {user, token} )
             }
         } else {
