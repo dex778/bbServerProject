@@ -10,7 +10,7 @@ const recipe = require('../models/recipe');
 *** Recipe Creation ***
 ********/
 
-router.post('/create', validateSession, (req,res) => {
+router.post('/create', validateSession, function (req,res){
     const recipeEntry = {
         name: req.body.recipe.title,
         ingredients: req.body.recipe.ingredients,
