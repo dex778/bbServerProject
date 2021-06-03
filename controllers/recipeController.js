@@ -1,11 +1,7 @@
-
-
 const express = require('express');
 const router = express.Router();
 const validateSession = require('../middleware/validateSession');
 const recipe = require('../models/recipe');
-
-//Rachel's Create Recipe Creation *** //
 
 router.post('/create', validateSession, (req,res) => {
     recipe.create({
@@ -14,11 +10,10 @@ router.post('/create', validateSession, (req,res) => {
         preparation: req.body.preparation,
         owner: req.body.owner,
         time: req.body.time
-    }) 
+    })
     .then(recipe => res.status(200).json(recipe))
     .catch (err=> res.status(500).json({error:err}))
 })
-
 
 
 // router.get('/', function(req, res){
