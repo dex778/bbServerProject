@@ -4,7 +4,36 @@ Recipe Name:
 Ingredients:
 Prepparation:
 cook time:
+*/
+const sequelize = require('sequelize');
+const database = require('../db')
 
+    const Recipe = database.define('recipe', {
+        name: {
+            type: sequelize.STRING,
+            allowNull: false
+        },
+        ingredients: {
+            type: sequelize.STRING,
+            allowNull: false
+        },
+        preparation: {
+            type: sequelize.STRING,
+            allowNull: false
+        },
+        owner: {
+            type: sequelize.STRING,
+        },
+        time: {
+            type: sequelize.STRING,
+            allowNull: false
+        }
+    })
+
+
+module.exports = Recipe;
+
+<<<<<<< HEAD
 */
 
 module.exports = (sequelize, DataTypes) => {
@@ -31,3 +60,5 @@ module.exports = (sequelize, DataTypes) => {
     })
     return Recipe
     };
+=======
+>>>>>>> 6059e7c5d2569b52576aad975b6c469211241875
