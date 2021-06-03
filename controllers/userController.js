@@ -1,14 +1,7 @@
-// const express = require('express') //not necessary because we have line 2
 const router = require('express').Router();
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
-
-/* Test route */
-router.get('/user', (req, res) => {
-    res.send('testing the userController')
-
-})
 
 router.post('/register', (req, res) => {              //with every endpoint we need route and callback function
     User.create({
@@ -17,7 +10,7 @@ router.post('/register', (req, res) => {              //with every endpoint we n
     })
     .then(user => {
         let token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: '1d'})
-        res.send({ user, token })
+        res.send({ user, sessionToken: token })
     })
          
     .catch(error => res.status(500).send({
@@ -41,7 +34,7 @@ router.post('/login', (req, res) => {
 
             function generateToken(user){
                 let token = jwt.sign( { id: user.id }, process.env.SECRET, { expiresIn: '1d'} );
-                res.send( {user, token} )
+                res.send( {user, sessionToken: token} )
             }
         } else {
             res.send('User not found')

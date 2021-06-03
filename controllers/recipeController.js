@@ -9,11 +9,11 @@ const recipe = require('../models/recipe');
 
 router.post('/create', validateSession, (req,res) => {
     recipe.create({
-        name: req.body.recipe.name,
-        ingredients: req.body.recipe.ingredients,
-        preparation: req.body.recipe.preparation,
-        owner: req.body.recipe.owner,
-        time: req.body.recipe.time
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+        preparation: req.body.preparation,
+        owner: req.body.owner,
+        time: req.body.time
     }) 
     .then(recipe => res.status(200).json(recipe))
     .catch (err=> res.status(500).json({error:err}))
@@ -51,14 +51,16 @@ router.get('/:name', function(req,res) {
 
 router.put("/update/:id", validateSession, function (req, res) {
     const updateRecipePost = {
-        name: req.body.recipe.name,
-        ingredients: req.body.recipe.ingredients,
-        preparation: req.body.recipe.preparation,
-        time: req.body.recipe.time,
-        owner: req.body.recipe.owner
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+        preparation: req.body.preparation,
+        time: req.body.time,
+        owner: req.body.owner
     };
 
-    const query = { where: { id: req.params.id, owner: req.user.id } };
+    const query = { where: { 
+        id: req.params.id 
+    } };
 
     Recipe.update(updateRecipePost, query)
         .then((recipes) => res.status(200).json(recipes))
@@ -68,7 +70,10 @@ router.put("/update/:id", validateSession, function (req, res) {
 // Brey's DELETE ***********
 
 router.delete("/delete/:id", validateSession, function (req, res) {
-    const query = {where: { id: req.params.id, owner: req.user.id } };
+    const query = { 
+        where: { 
+            id: req.params.id
+        } };
 
     recipe.destroy(query)
         .then(() => res.status(200).json({ message: "Recipe Entry Removed" }))
@@ -78,13 +83,4 @@ router.delete("/delete/:id", validateSession, function (req, res) {
 module.exports = router;
 
 
-
-
-
-// router.get('/', validateSession, function(req, res)
-// {
-
-// res.send('Pracitce Round');
-
-// }); 
 
