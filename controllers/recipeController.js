@@ -34,7 +34,7 @@ router.get('/my-recipes', validateSession, (req, res) => {
     Recipe.findAll({
         where: {owner: userid}
     })
-    ,then(recipes => res.status(200).json(recipes))
+    .then(recipes => res.status(200).json(recipes))
     .catch(err => res.status(500).json({error: err}))
 });
 
@@ -57,12 +57,11 @@ router.put("/update/:id", validateSession, function (req, res) {
         time: req.body.time,
         owner: req.body.owner
     };
-
     const query = { where: { 
         id: req.params.id 
     } };
 
-    Recipe.update(updateRecipePost, query)
+    recipe.update(updateRecipePost, query)
         .then((recipes) => res.status(200).json(recipes))
         .catch((err) => res.status(500).json({ error: err }));
 });
@@ -74,7 +73,6 @@ router.delete("/delete/:id", validateSession, function (req, res) {
         where: { 
             id: req.params.id
         } };
-
     recipe.destroy(query)
         .then(() => res.status(200).json({ message: "Recipe Entry Removed" }))
         .catch((err) => res.status(500).json({ error: err }));
