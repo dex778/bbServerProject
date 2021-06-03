@@ -8,11 +8,12 @@ const recipe = require('../models/recipe');
 //Rachel's Create Recipe Creation *** //
 
 router.post('/create', validateSession, (req,res) => {
+    console.log('CODE HERE:', req.user)
     recipe.create({
         name: req.body.name,
         ingredients: req.body.ingredients,
         preparation: req.body.preparation,
-        owner: req.body.owner,
+        owner: req.user.id,
         time: req.body.time
     }) 
     .then(recipe => res.status(200).json(recipe))
@@ -30,8 +31,8 @@ router.post('/create', validateSession, (req,res) => {
 // Eric: call your own list of recipes and saved to your userid
 
 router.get('/my-recipes', validateSession, (req, res) => {
-    let userid = req.body.owner.id
-    Recipe.findAll({
+    let userid = req.user.id
+    recipe.findAll({
         where: {owner: userid}
     })
     .then(recipes => res.status(200).json(recipes))
@@ -41,11 +42,11 @@ router.get('/my-recipes', validateSession, (req, res) => {
 // enable you to search by title
 router.get('/:name', function(req,res) {
     let name = req.params.name;
-    Recipe.findAll({
+    recipe.findAll({
         where: {name: name}
     })
     .then(recipes => res.status(200).json(recipes))
-    .catch(err => res.status(500),json({error: err}))
+    .catch(err => res.status(500).json({error: err}))
 })
 // Brey's PUT ***********
 
