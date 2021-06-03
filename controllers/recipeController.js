@@ -51,14 +51,16 @@ router.get('/:name', function(req,res) {
 
 router.put("/update/:id", validateSession, function (req, res) {
     const updateRecipePost = {
-        name: req.body.recipe.name,
-        ingredients: req.body.recipe.ingredients,
-        preparation: req.body.recipe.preparation,
-        time: req.body.recipe.time,
-        owner: req.body.recipe.owner
+        name: req.body.name,
+        ingredients: req.body.ingredients,
+        preparation: req.body.preparation,
+        time: req.body.time,
+        owner: req.body.owner
     };
 
-    const query = { where: { id: req.params.id, owner: req.user.id } };
+    const query = { where: { 
+        id: req.params.id 
+    } };
 
     Recipe.update(updateRecipePost, query)
         .then((recipes) => res.status(200).json(recipes))
