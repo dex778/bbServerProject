@@ -11,8 +11,8 @@ const validateSession = (req, res, next) => {
         })
     } else {
         jwt.verify(token, process.env.SECRET, (err, decodedToken) => {
-            // console.log(decodedToken)
-            if(!err && decodedToken) {
+            // console.log('SECOND WORD', decodedToken, err)
+            if(!err && decodedToken) {// console.log('TEXT')
                 User.findOne({
                     where: {
                         id: decodedToken.id
@@ -20,9 +20,10 @@ const validateSession = (req, res, next) => {
                 })
 
                 .then(user => {
-                    if(user) throw err;
+                    if(!user) throw err;
 
-                    req.user;
+                    req.user = user;
+                    // console.log('WORD', req.user)
                     return next()
                 })
                 .catch(err => next(err))
