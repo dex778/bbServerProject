@@ -4,6 +4,7 @@ const router = express.Router();
 const validateSession = require('../middleware/validateSession');
 const recipe = require('../models/recipe');
 
+//Rachel endpoint
 router.post('/create', validateSession, (req,res) => {
     recipe.create({
         name: req.body.name,
@@ -68,6 +69,3 @@ router.delete("/delete/:id", validateSession, function (req, res) {
 });
 
 module.exports = router;
-
-//comment
-//2nd comment
