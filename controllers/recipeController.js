@@ -3,7 +3,7 @@ const router = express.Router();
 const validateSession = require('../middleware/validateSession');
 const recipe = require('../models/recipe');
 
-
+//Rachel create endpoint
 router.post('/create', validateSession, (req,res) => {
     // console.log('CODE HERE:', req.user)
     recipe.create({
