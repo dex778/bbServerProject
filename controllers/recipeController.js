@@ -21,9 +21,8 @@ router.post('/create', validateSession, (req,res) => {
 
 router.get('/my-recipes', validateSession, (req, res) => {
     let userid = req.user.id
-    console.log(userid);
     recipe.findAll({
-      where: {owner: `${userid}`}
+      where: {owner: userid}
     })
     .then(recipes => res.status(200).json(recipes))
     .catch(err => res.status(500).json({error: err}))
