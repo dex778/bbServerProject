@@ -1,10 +1,11 @@
-
 const express = require('express');
 const router = express.Router();
 const validateSession = require('../middleware/validateSession');
 const recipe = require('../models/recipe');
 
+//Rachel create endpoint
 router.post('/create', validateSession, (req,res) => {
+    // console.log('CODE HERE:', req.user)
     recipe.create({
         name: req.body.name,
         ingredients: req.body.ingredients,
@@ -45,7 +46,7 @@ router.put("/update/:id", validateSession, function (req, res) {
         ingredients: req.body.ingredients,
         preparation: req.body.preparation,
         time: req.body.time,
-        owner: req.body.owner
+        // owner: req.body.owner
     };
     const query = { where: { 
         id: req.params.id 
